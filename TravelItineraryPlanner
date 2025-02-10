@@ -1,0 +1,110 @@
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Destination {
+    private String name;
+    private String date;
+    private double budget;
+
+    public Destination(String name, String date, double budget) {
+        this.name = name;
+        this.date = date;
+        this.budget = budget;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDate() {            
+        return date;
+    }
+
+    public double getBudget() {
+        return budget;
+    }
+
+    @Override
+    public String toString() {
+        return "Destination: " + name + " | Date: " + date + " | Budget: ₹" + budget;  
+}
+}
+public class TravelItineraryPlanner {
+    private ArrayList<Destination> itinerary;
+    private Scanner scanner;
+
+    public TravelItineraryPlanner() {
+        itinerary = new ArrayList<>();
+        scanner = new Scanner(System.in);
+    }
+
+    // Method to add a destination
+    public void addDestination() {
+        System.out.print("Enter Destination Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter Travel Date (YYYY-MM-DD): ");
+        String date = scanner.nextLine();
+        System.out.print("Enter Estimated Budget: ₹");
+        double budget = scanner.nextDouble();
+        scanner.nextLine(); 
+
+        itinerary.add(new Destination(name, date, budget));
+        System.out.println("Destination added successfully!");
+    }
+
+    public void travelPlans() {
+        if (itinerary.isEmpty()) {
+            System.out.println("No destinations added yet.");
+            return;
+        }
+        System.out.println("\n==== Your Travel Itinerary ====");
+        for (Destination d : itinerary) {
+            System.out.println(d);
+        }
+    }
+    public void calculateBudget() {           
+        double totalBudget = 0;              
+        for (Destination d : itinerary) {
+            totalBudget += d.getBudget();
+        }
+        System.out.println("Total Estimated Budget: ₹" + totalBudget);
+    }
+    public void startPlanner() {
+        while (true) {
+            System.out.println("\n==== Travel Itinerary Planner ====");
+            System.out.println("1. Add Destination");
+            System.out.println("2. To check your Plans");
+            System.out.println("3. Calculate Total Budget");
+            System.out.println("4. Exit");
+            System.out.print("Choose an option: ");              
+                                                                           
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    addDestination();
+                    break;
+                case 2:                                              
+                    travelPlans();                           
+                    break;
+                case 3:
+                    calculateBudget();
+                    break;
+                case 4:
+                    System.out.println("Thank you for using the Travel Itinerary Planner!");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid option! Please try again.");
+            }
+        }
+    }                                                             
+
+    public static void main(String[] args) {
+        TravelItineraryPlanner planner = new TravelItineraryPlanner();    
+        planner.startPlanner();
+    }
+}
+
